@@ -2,65 +2,138 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light" />
 <title>Workforce Management Web App: Frontend Case Study by Muhammad Dawood Butt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-  :root{--bg:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;}
+  :root{--paper:#FAFAF8;--ink:#15171B;--muted:#666B74;--accent:#2A54E0;--accent-soft:#EAEFFD;--panel:#F2F3F6;--line:#E1E3E8;}
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:17px;line-height:1.7;}
-  main{max-width:680px;margin:0 auto;padding:clamp(32px,8vw,80px) 20px 48px;}
-  h1{font-size:clamp(2rem,7vw,2.8rem);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em;}
-  h2{font-size:1.3rem;margin:48px 0 10px;}
-  h3{font-size:1.05rem;margin:0 0 4px;}
-  p{margin:0 0 14px;}
-  .muted{color:var(--muted);}
-  .by{color:var(--muted);margin:0 0 40px;}
-  .by b{color:var(--ink);}
-  .tags{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:14px 0 0;list-style:none;}
-  .tags li{border:1px solid var(--line);border-radius:6px;padding:3px 12px;font-size:15px;}
-  ul.plain{padding-left:20px;margin:0;}
-  ul.plain li{margin-bottom:6px;}
-  .item{padding:16px 0;border-top:1px solid var(--line);}
-  .item p{margin:0;color:var(--muted);font-size:16px;}
-  .note{margin-top:48px;padding-left:16px;border-left:3px solid var(--accent);color:var(--muted);font-size:15px;}
-  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-wrap:break-word;}
+  .wrap{max-width:780px;margin:0 auto;padding:clamp(40px,8vw,96px) clamp(18px,5vw,28px) 64px;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+  .cover{padding-bottom:clamp(28px,5vw,44px);margin-bottom:clamp(32px,5vw,48px);border-bottom:1px solid var(--line);}
+  .pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.5;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(42,84,224,.18);padding:6px 12px;border-radius:100px;margin-bottom:22px;}
+  h1.title{font-family:'Fraunces',Georgia,serif;font-weight:500;font-style:italic;font-size:clamp(2rem,7vw,3.2rem);line-height:1.1;margin:0 0 16px;text-wrap:balance;}
+  .subtitle{color:var(--muted);max-width:56ch;margin:0 0 22px;}
+  .byline{font-size:14px;margin:0;}.byline b{font-weight:600;}.byline .role{color:var(--muted);}
+
+  section{margin-bottom:clamp(40px,7vw,56px);}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--accent);margin:0 0 10px;}
+  h2.heading{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(1.4rem,4vw,1.6rem);line-height:1.2;margin:0 0 16px;}
+  p.body-text{color:#33363c;font-size:15.5px;max-width:66ch;margin:0 0 14px;}
+
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--panel);border:1px solid var(--line);padding:6px 11px;border-radius:7px;}
+
+  .spec{border-top:1px solid var(--line);margin:20px 0 0;}
+  .spec-row{display:flex;gap:24px;padding:13px 0;border-bottom:1px solid var(--line);}
+  .spec-row dt{flex:0 0 140px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);margin:0;}
+  .spec-row dd{margin:0;font-size:14.5px;}
+
+  .module{display:grid;grid-template-columns:40px minmax(0,1fr);gap:20px;padding:26px 0;border-top:1px solid var(--line);}
+  .module:last-child{border-bottom:1px solid var(--line);}
+  .module-index{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);padding-top:3px;}
+  .module-title{font-weight:600;font-size:16.5px;margin:0 0 8px;}
+  .module-body{font-size:14.5px;color:#3a3d43;max-width:62ch;margin:0 0 12px;}
+  .module-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .module-list li{font-size:13.5px;color:#4a4d54;padding-left:14px;position:relative;}
+  .module-list li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;background:var(--accent);border-radius:1px;}
+
+  .note{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;font-size:13.8px;color:#44474d;}
+
+  footer{border-top:1px solid var(--line);padding-top:24px;margin-top:clamp(40px,7vw,64px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
+
+  @media(max-width:600px){
+    .pill{border-radius:12px;}
+    .spec-row{flex-direction:column;gap:2px;}
+    .spec-row dt{flex:none;}
+    .module{grid-template-columns:1fr;gap:6px;padding:22px 0;}
+    .module-index{padding-top:0;}
+    .note{padding:16px;}
+    footer{flex-direction:column;}
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>Workforce Management Web App</h1>
-  <p class="by">Frontend case study by <b>Muhammad Dawood Butt</b>, Frontend Developer at Offneo</p>
-  <p>A web app for day-to-day workforce operations. Attendance, leave, payroll and location-based tracking live in one dashboard for admins and employees.</p>
-  <p class="muted">Built at Offneo. Private product, not publicly accessible.</p>
+<div class="wrap">
 
-  <h2>Built with</h2>
-  <ul class="tags">
-    <li>React</li><li>Redux Toolkit</li><li>REST API integration</li><li>Maps integration</li><li>Tailwind CSS</li>
-  </ul>
+  <div class="cover">
+    <span class="pill">Built at Offneo · private, not publicly accessible</span>
+    <h1 class="title">Workforce Management Web App</h1>
+    <p class="subtitle">A web application for day-to-day workforce operations, covering attendance, leave, payroll, inventory, and location-based tracking in one dashboard for admins and employees.</p>
+    <p class="byline"><b>Muhammad Dawood Butt</b> · <span class="role">Frontend Developer at Offneo</span></p>
+  </div>
 
-  <h2>What it is</h2>
-  <p>A workforce management system used inside a company's internal operations. Employees check in and out, request leave and view payroll details. Admins monitor attendance and manage the workforce from one operations dashboard. It runs in a live production environment.</p>
+  <section>
+    <p class="eyebrow">Stack</p>
+    <h2 class="heading">Built with</h2>
+    <p class="body-text">A component-driven React application built alongside a small cross-functional team.</p>
+    <div class="tags">
+      <span class="tag">React</span><span class="tag">Redux Toolkit</span><span class="tag">REST API Integration</span>
+      <span class="tag">Maps Integration</span><span class="tag">Tailwind CSS</span>
+    </div>
+  </section>
 
-  <h2>My role</h2>
-  <p>I worked as a frontend developer in a cross-functional team, building frontend modules and integrating them with REST APIs. I also worked on the backend side and built some medium-level APIs, while the backend team handled the core backend logic.</p>
-  <ul class="plain">
-    <li>Built multiple frontend modules as part of a team</li>
-    <li>Component-driven UI shared across modules</li>
-    <li>REST APIs connected to the UI</li>
-    <li>Built medium-level backend APIs alongside the backend team</li>
-    <li>Global UI state managed with Redux Toolkit</li>
-    <li>Responsive layouts for admin and employee views</li>
-  </ul>
+  <section>
+    <p class="eyebrow">Overview</p>
+    <h2 class="heading">What it is</h2>
+    <p class="body-text">A workforce management system used inside a company's internal operations. Employees check in and out, request leave, and view payroll details, while admins monitor attendance, track company stock, and manage the workforce from one operations dashboard. The product runs in a live production environment.</p>
+  </section>
 
-  <h2>What's inside</h2>
-  <div class="item"><h3>Operations dashboard</h3><p>Live headcount, presence and leave metrics, attendance trend charts and notifications.</p></div>
-  <div class="item"><h3>Attendance and leave</h3><p>Real-time check-in and check-out with location-based validation, and leave requests with an approval flow.</p></div>
-  <div class="item"><h3>Payroll</h3><p>Salary breakdown and payslip view, driven by attendance and leave records.</p></div>
-  <div class="item"><h3>Administration</h3><p>Account and company settings, plus content management for staff.</p></div>
+  <section>
+    <p class="eyebrow">Ownership</p>
+    <h2 class="heading">My role</h2>
+    <p class="body-text">I worked as a frontend developer in a cross-functional team, building frontend modules and integrating them with REST APIs. I also built some medium-level backend APIs alongside the backend team, who handled the core backend logic.</p>
+    <dl class="spec">
+      <div class="spec-row"><dt>Frontend</dt><dd>Built multiple modules as part of a team</dd></div>
+      <div class="spec-row"><dt>Architecture</dt><dd>Component-driven UI shared across modules</dd></div>
+      <div class="spec-row"><dt>API integration</dt><dd>REST APIs integrated with the UI, plus medium-level backend APIs</dd></div>
+      <div class="spec-row"><dt>State management</dt><dd>Global UI state managed with Redux Toolkit</dd></div>
+      <div class="spec-row"><dt>Responsive UI</dt><dd>Responsive layouts for both admin and employee views</dd></div>
+      <div class="spec-row"><dt>Environment</dt><dd>Private production environment, not publicly browsable</dd></div>
+    </dl>
+  </section>
 
-  <p class="note"><b>Why there is no live link:</b> this is a private product built at Offneo and is not publicly deployed. Out of respect for confidentiality, this case study has no product name, screenshots or client details.</p>
+  <section>
+    <p class="eyebrow">Breakdown</p>
+    <h2 class="heading">What's built into it</h2>
+    <p class="body-text">The product covers four areas of workforce operations.</p>
 
-  <footer>Muhammad Dawood Butt, Offneo</footer>
-</main>
+    <div class="module"><div class="module-index">01</div><div>
+      <h3 class="module-title">Core</h3>
+      <p class="module-body">An operations dashboard with live counts and trend charts, plus notifications for important events.</p>
+      <ul class="module-list"><li>Headcount, presence, and leave metrics</li><li>Notifications</li></ul>
+    </div></div>
+
+    <div class="module"><div class="module-index">02</div><div>
+      <h3 class="module-title">Workforce</h3>
+      <p class="module-body">Employees check in and out in real time with location-based validation, and submit leave requests that go through approval.</p>
+      <ul class="module-list"><li>Attendance with live status</li><li>Employee management</li><li>Leave requests</li></ul>
+    </div></div>
+
+    <div class="module"><div class="module-index">03</div><div>
+      <h3 class="module-title">Operations</h3>
+      <p class="module-body">Day-to-day company operations, from salary to stock to office locations.</p>
+      <ul class="module-list"><li>Payroll with salary breakdown and payslip view</li><li>Inventory to track company stock</li><li>Locations to add and verify work sites</li><li>Messaging</li></ul>
+    </div></div>
+
+    <div class="module"><div class="module-index">04</div><div>
+      <h3 class="module-title">Administration</h3>
+      <p class="module-body">Access control and company setup, so each person sees and does only what their role allows.</p>
+      <ul class="module-list"><li>Roles with permissions per feature</li><li>Multi-level approvals across different roles</li><li>Members and security settings</li><li>Company profile, features, and news</li></ul>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="note"><b>Why there is no live link:</b> This application was built at Offneo and is a private product, not publicly deployed. Out of respect for confidentiality, this case study contains no product name, screenshots, or client details, only a description of my role and the engineering work.</div>
+  </section>
+
+  <footer><span>Workforce Management Web App: Frontend Case Study</span><span>Muhammad Dawood Butt · Offneo</span></footer>
+</div>
 </body>
 </html>
